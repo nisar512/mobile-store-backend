@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Admin Login</title>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Admin Login</h1>
+        <form id="login-form">
+            <div>
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+            <div>
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            <div>
+                <button type="button" onclick="submitForm()">Login</button>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        async function submitForm() {
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+
+            const jsonData = { email, password };
+
+            try {
+                const response = await fetch('http://localhost:8000/api/admin/verify', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json', // Set the Content-Type to JSON
+                    },
+                    body: JSON.stringify(jsonData), // Convert the object to JSON
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+                    if (data.redirect) {
+                        console.log('Redirecting to:', data.redirect);
+                        window.location.href = data.redirect;
+                    } else {
+                        console.log('Invalid JSON response:', data);
+                        // Handle other cases or display a success message if needed
+                    }
+                }
+
+                // Handle the response here if needed
+                // ...
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        }
+    </script>
+</body>
+
+</html>

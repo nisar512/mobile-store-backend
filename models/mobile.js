@@ -1,18 +1,28 @@
 const mongoose = require("mongoose");
+
 const Schema = mongoose.Schema;
-const adminSchema = new Schema({
+
+const mobileSchema = new Schema({
+    brand: {
+        type: String,
+        require: true
+    },
     name: {
         type: String,
         require: true
     },
-    email: {
+    currency: {
         type: String,
         require: true
     },
-    password: {
-        type: String,
+
+    price: {
+        type: Number,
         require: true
-    }
+    },
+
+
+
 }, { timestamps: true })
 
-module.exports = mongoose.model("Admin", adminSchema);
+module.exports = mongoose.model("Mobile", mobileSchema);
